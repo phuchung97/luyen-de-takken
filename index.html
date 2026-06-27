@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宅建ドリル ｜ Luyện đề Takken mỗi ngày</title>
+<meta name="description" content="Mỗi ngày 3 câu hỏi từ đề thi thật 宅建士 (Takken) 10 năm qua, kèm dịch nghĩa và giải thích chi tiết bằng tiếng Việt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f5f3ee;   /* washi - giấy Nhật */
+    --surface:   #ffffff;
+    --ink:       #2b2b2b;   /* mực sumi */
+    --ink-soft:  #5f5f5f;
+    --line:      #e6e2d8;
+    --ai:        #2f5d7c;   /* 藍色 - xanh chàm */
+    --ai-soft:   #4a7e9e;
+    --ai-bg:     #eaf1f5;
+    --vermilion: #d9542b;   /* 朱色 - đỏ son, dùng tiết chế */
+    --matcha:    #5b8c5a;   /* xanh trà - đáp án đúng */
+    --matcha-bg: #eef5ed;
+    --gold:      #c8a45c;
+    --radius:    18px;
+    --radius-sm: 12px;
+    --shadow:    0 4px 24px rgba(47, 93, 124, 0.08);
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Noto Sans JP", "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  .site-inner {
+    max-width: 860px; margin: 0 auto; padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .logo-mark {
+    width: 44px; height: 44px; border-radius: 14px;
+    background: var(--ai); color: #fff;
+    display: grid; place-items: center;
+    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; font-size: 22px;
+    box-shadow: var(--shadow-sm); flex-shrink: 0;
+  }
+  .logo-text strong {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 19px; color: var(--ink); display: block; line-height: 1.2;
+  }
+  .logo-text span { font-size: 12.5px; color: var(--ink-soft); letter-spacing: .02em; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center; padding: 54px 20px 40px;
+  }
+  .hero .kanji {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 13px; letter-spacing: .35em; color: var(--ai-soft);
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: clamp(26px, 5vw, 38px); font-weight: 700;
+    line-height: 1.35; margin-bottom: 14px; letter-spacing: .01em;
+  }
+  .hero p { color: var(--ink-soft); max-width: 540px; margin: 0 auto; font-size: 15.5px; }
+  .hero .date-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 22px; padding: 9px 18px;
+    background: var(--ai-bg); color: var(--ai);
+    border-radius: 999px; font-size: 14px; font-weight: 500;
+  }
+  .hero .date-pill::before { content: "📅"; }
+
+  /* ---------- Section ---------- */
+  .section-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin: 8px 0 22px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--line);
+  }
+  .section-head h2 {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 21px; font-weight: 700;
+  }
+  .section-head .jp { font-size: 13px; color: var(--ai-soft); font-weight: 500; }
+
+  /* ---------- Question card (nạp từ archive) ---------- */
+  #today { min-height: 200px; }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px 22px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+  }
+  .question-title {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 16px; font-weight: 700; color: var(--ai);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .question-title .num {
+    background: var(--ai); color: #fff;
+    width: 30px; height: 30px; border-radius: 9px;
+    display: grid; place-items: center; font-size: 15px; flex-shrink: 0;
+  }
+  .question-tag {
+    display: inline-block; margin: 10px 0 16px;
+    font-size: 12.5px; color: var(--ink-soft);
+    background: var(--bg); border: 1px solid var(--line);
+    padding: 3px 12px; border-radius: 999px;
+  }
+  .question-body {
+    font-size: 16px; line-height: 2;
+    margin-bottom: 18px;
+    font-feature-settings: "palt";
+  }
+
+  .options { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 13px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    cursor: pointer; transition: all .15s ease;
+    background: var(--surface);
+    user-select: none;
+  }
+  .option:hover { border-color: var(--ai-soft); background: var(--ai-bg); }
+  .option .marker {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid var(--ai-soft); color: var(--ai);
+    display: grid; place-items: center; font-weight: 700; font-size: 14px;
+    transition: all .15s ease; background: var(--surface);
+  }
+  .option.selected { border-color: var(--ai); background: var(--ai-bg); }
+  .option.selected .marker { background: var(--ai); color: #fff; }
+
+  /* Trạng thái sau khi chấm */
+  .option.correct { border-color: var(--matcha); background: var(--matcha-bg); }
+  .option.correct .marker { background: var(--matcha); color: #fff; border-color: var(--matcha); }
+  .option.wrong { border-color: var(--vermilion); background: #fbeee9; }
+  .option.wrong .marker { background: var(--vermilion); color: #fff; border-color: var(--vermilion); }
+  .options.locked .option { cursor: default; }
+  .options.locked .option:hover { background: var(--surface); }
+  .options.locked .option.correct:hover { background: var(--matcha-bg); }
+  .options.locked .option.wrong:hover { background: #fbeee9; }
+
+  /* ---------- Nút xem đáp án ---------- */
+  .reveal-btn {
+    margin-top: 18px;
+    width: 100%;
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: #fff; background: var(--ai);
+    border: none; border-radius: var(--radius-sm);
+    padding: 14px; cursor: pointer;
+    transition: background .15s ease, transform .05s ease;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .reveal-btn:hover { background: #264e69; }
+  .reveal-btn:active { transform: translateY(1px); }
+  .reveal-btn::before { content: "🔍"; }
+  .reveal-btn.opened { background: var(--ink-soft); }
+  .reveal-btn.opened::before { content: "📖"; }
+
+  /* ---------- Khối giải thích (ẩn mặc định) ---------- */
+  .explanation {
+    display: none;
+    margin-top: 18px;
+    border-top: 1px dashed var(--line);
+    padding-top: 18px;
+    animation: fadeIn .3s ease;
+  }
+  .explanation.show { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+  .answer-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--matcha-bg); color: var(--matcha);
+    border: 1px solid var(--matcha);
+    font-weight: 700; font-size: 15px;
+    padding: 7px 16px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .answer-badge::before { content: "✓"; font-size: 16px; }
+
+  .explanation h4 {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 15px; color: var(--ai);
+    margin: 16px 0 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .explanation h4::before { content: "▸"; color: var(--gold); }
+  .explanation p { font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .explanation .vi-trans {
+    background: var(--bg); border-left: 3px solid var(--ai-soft);
+    padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 14.5px; color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .explanation .opt-analysis { margin: 4px 0; }
+  .explanation .opt-analysis li {
+    list-style: none; padding: 8px 0; border-bottom: 1px dotted var(--line);
+    font-size: 14.5px;
+  }
+  .explanation .opt-analysis li:last-child { border-bottom: none; }
+  .explanation .opt-analysis b { color: var(--ai); }
+  .law-chip {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    background: var(--ai); color: #fff; padding: 1px 9px;
+    border-radius: 6px; margin-right: 6px;
+  }
+
+  /* ---------- Archive ---------- */
+  .archive-section { margin: 48px 0 20px; }
+  #archive-list {
+    list-style: none; display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  #archive-list a {
+    display: block; text-decoration: none;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    color: var(--ink); transition: all .15s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  #archive-list a:hover {
+    border-color: var(--ai); transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  #archive-list a.active { border-color: var(--ai); background: var(--ai-bg); }
+  #archive-list .a-date { font-weight: 700; font-size: 15px; color: var(--ai); }
+  #archive-list .a-label { font-size: 12px; color: var(--ink-soft); }
+
+  /* ---------- Trạng thái tải / lỗi ---------- */
+  .state { text-align: center; padding: 40px 20px; color: var(--ink-soft); }
+  .spinner {
+    width: 34px; height: 34px; margin: 0 auto 14px;
+    border: 3px solid var(--line); border-top-color: var(--ai);
+    border-radius: 50%; animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    margin-top: 56px; padding: 30px 20px 40px;
+    border-top: 1px solid var(--line); background: var(--surface);
+    text-align: center; color: var(--ink-soft); font-size: 13px;
+  }
+  footer.site .jp { font-family: "Zen Maru Gothic", sans-serif; color: var(--ai); }
+
+  @media (max-width: 560px) {
+    .question-card { padding: 20px 18px; }
+    .question-body { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <div class="logo-mark">宅</div>
+    <div class="logo-text">
+      <strong>宅建ドリル</strong>
+      <span>Luyện đề Takken mỗi ngày · 毎日3問</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="kanji">宅地建物取引士</div>
+    <h1>Mỗi ngày 3 câu — Vững kiến thức Takken</h1>
+    <p>Bốc ngẫu nhiên từ đề thi thật 10 năm qua, kèm dịch nghĩa và phân tích chuyên sâu từng phương án bằng tiếng Việt dựa trên 宅建業法 &amp; 民法.</p>
+    <div class="date-pill" id="today-date">Đang tải…</div>
+  </section>
+
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Tiêu điểm hôm nay</h2>
+      <span class="jp">今日の3問</span>
+    </div>
+
+    <div id="today">
+      <div class="state">
+        <div class="spinner"></div>
+        Đang nạp câu hỏi…
+      </div>
+    </div>
+
+    <div class="archive-section">
+      <div class="section-head">
+        <h2>Ôn lại các ngày trước</h2>
+        <span class="jp">過去のドリル</span>
+      </div>
+      <ul id="archive-list"></ul>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <p><span class="jp">宅建ドリル</span> — Công cụ luyện đề cá nhân.</p>
+  <p style="margin-top:6px">Nội dung mang tính tham khảo ôn tập, không thay thế đề thi/giáo trình chính thức.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const DB_URL      = "database.json";
+  const ARCHIVE_DIR = "archive/";
+  const todayBox    = document.getElementById("today");
+  const archiveList = document.getElementById("archive-list");
+  const datePill    = document.getElementById("today-date");
+
+  /* YYYY-MM-DD -> DD/MM/YYYY */
+  function fmtVN(iso) {
+    const [y, m, d] = iso.split("-");
+    return `${d}/${m}/${y}`;
+  }
+  /* YYYY-MM-DD -> "Thứ ..., DD/MM/YYYY" cho date-pill */
+  function fmtLong(iso) {
+    const dt = new Date(iso + "T00:00:00");
+    const thu = ["Chủ nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"][dt.getDay()];
+    return `${thu}, ${fmtVN(iso)}`;
+  }
+
+  /* Nạp 1 ngày vào khu Tiêu điểm */
+  async function loadDay(iso) {
+    todayBox.innerHTML = `<div class="state"><div class="spinner"></div>Đang nạp đề ngày ${fmtVN(iso)}…</div>`;
+    datePill.textContent = fmtLong(iso);
+    try {
+      const res = await fetch(ARCHIVE_DIR + iso + ".html", { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      todayBox.innerHTML = await res.text();
+      // reset trạng thái nút chọn ngày
+      document.querySelectorAll("#archive-list a").forEach(a =>
+        a.classList.toggle("active", a.dataset.date === iso));
+      todayBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      todayBox.innerHTML = `<div class="state">⚠️ Không nạp được đề ngày ${fmtVN(iso)}.<br><small>${err.message}</small></div>`;
+    }
+  }
+
+  /* Sinh danh sách link các ngày */
+  function renderArchive(dates) {
+    archiveList.innerHTML = "";
+    dates.forEach((iso, i) => {
+      const li = document.createElement("li");
+      const a  = document.createElement("a");
+      a.href = "#";
+      a.dataset.date = iso;
+      a.innerHTML = `<span class="a-date">${fmtVN(iso)}</span>
+                     <span class="a-label">${i === 0 ? "Mới nhất · 3 câu" : "3 câu"}</span>`;
+      a.addEventListener("click", (e) => { e.preventDefault(); loadDay(iso); });
+      li.appendChild(a);
+      archiveList.appendChild(li);
+    });
+  }
+
+  /* ---- Tương tác: dùng event delegation vì nội dung nạp động ---- */
+
+  // Chọn / bỏ chọn đáp án
+  todayBox.addEventListener("click", (e) => {
+    const opt = e.target.closest(".option");
+    if (opt) {
+      const list = opt.closest(".options");
+      if (list.classList.contains("locked")) return;       // đã chấm thì khóa
+      list.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+      return;
+    }
+
+    // Nút "Xem đáp án & Giải thích"
+    const btn = e.target.closest(".reveal-btn");
+    if (btn) {
+      const card = btn.closest(".question-card");
+      const exp  = card.querySelector(".explanation");
+      const list = card.querySelector(".options");
+      const correct = card.dataset.correct;                // số đáp án đúng: "1".."4"
+
+      const isOpen = exp.classList.toggle("show");
+      btn.classList.toggle("opened", isOpen);
+      btn.lastChild.textContent = isOpen
+        ? " Ẩn giải thích"
+        : " Xem đáp án & Giải thích tiếng Việt";
+
+      if (isOpen && list && correct) {
+        list.classList.add("locked");
+        list.querySelectorAll(".option").forEach(o => {
+          const choice = o.dataset.choice;
+          if (choice === correct) o.classList.add("correct");
+          else if (o.classList.contains("selected")) o.classList.add("wrong");
+        });
+      }
+    }
+  });
+
+  /* ---- Khởi động ---- */
+  async function init() {
+    try {
+      const res = await fetch(DB_URL, { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      // Sắp mới → cũ để chắc chắn quiz_list[0] là mới nhất
+      const dates = (data.quiz_list || []).slice().sort().reverse();
+      if (!dates.length) {
+        todayBox.innerHTML = `<div class="state">Chưa có đề nào. Hãy chạy tác vụ tự động để tạo đề đầu tiên.</div>`;
+        return;
+      }
+      renderArchive(dates);
+      loadDay(dates[0]);
+    } catch (err) {
+      todayBox.innerHTML = `<div class="state">⚠️ Không đọc được database.json.<br><small>${err.message}</small></div>`;
+      datePill.textContent = "—";
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
